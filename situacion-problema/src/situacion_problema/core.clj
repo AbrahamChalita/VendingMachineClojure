@@ -201,7 +201,7 @@
 
 
 (defn overallwins [new old]
-  (cond 
+  (cond
     (empty? new) '()
     (empty? old) '()
     :else (cons (- (first (rest (first new))) (first (rest (first old)))) (overallwins (rest new) (rest old)))))
@@ -210,8 +210,7 @@
   (if (empty? slots) '()
       (if (or (and (<= (last_element (first slots)) 5) (>= (last_element (first slots)) 1)) (zero? (last_element (first slots))))
         (cons (list "Product: " (first (first slots)) "Q: " (last_element (first slots))) (low-inv (rest slots)))
-        (low-inv (rest slots)))
-      ))
+        (low-inv (rest slots)))))
 
 (defn fullcoins? [new old]
   (cond
@@ -244,9 +243,9 @@
 (defn filter-results [resultados]
   (if (empty? resultados) '()
       (if (imbricada? (first resultados)) (cons (list (first (first resultados)) (if (imbricada? (last_element (first resultados)))
-                                                         (first (rest (last_element (first resultados))))
-                                                         (last_element (first resultados))))
-                                              (filter-results (rest resultados)))
+                                                                                   (first (rest (last_element (first resultados))))
+                                                                                   (last_element (first resultados))))
+                                                (filter-results (rest resultados)))
           (cons (list (first resultados)) (filter-results (rest resultados))))))
 
 
@@ -257,10 +256,53 @@
         new-money (get-updated-money (get-last-valid-transaction (reverse res)))
         new-slot (first (rest (get-last-valid-transaction (reverse res))))]
     (list id
-          "<---------- Transactions ---------->" 
+          "<---------- Transactions ---------->"
           (filter-results res)
           "<<<<<<<<<<<<< Review >>>>>>>>>>>>>>"
-          (review new-money money new-slot originalMoney))
-        ))
+          (review new-money money new-slot originalMoney))))
+
+(def letras ["A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N"])
+
+(defn generaLetra []
+  (symbol (apply str (repeatedly 1 #(rand-nth letras)))))
+
+(defn generaMoneda []
+  (rand-nth [1 2 5 10 20]))
+
+(defn generaSecuencia [n]
+  (apply list (to-array (repeatedly n generaMoneda))))
+
+(defn generaTransaccion []
+  (let [numMonedas (rand-nth (range 1 6))]
+    (list (generaLetra) (generaSecuencia numMonedas))))
+
+(defn generaListaTrans []
+  (let [numTrans (rand-nth (range 1 30))]
+    (apply list (to-array (repeatedly numTrans generaTransaccion)))))
+
+(defn generaProductos [lista]
+  (let [prod (first lista)]
+    (if (empty? lista) '()
+        (cons (list (symbol prod) (rand-nth (range 1 40)) (rand-nth (range 1 40))) (generaProductos (rest lista))))))
+
+; Generate a random list of available products
+(take 5 (repeatedly #(generaProductos letras)))
+; Generate a random list of transactions
+(take 5 (repeatedly #(generaListaTrans)))
+
+; money stays the same?
+
+(defn generaMuchasMaquinas [money id num]
+  (if (= num 0) '()
+      (cons (list (generaProductos letras) money (generaListaTrans) id num) (generaMuchasMaquinas money (+ id 1) (- num 1)))))
 
 
+(defn resultadosFinales [lista]
+  (apply concat (pmap (fn [y] (doall (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x) (nth x 3))) y)))
+                      (partition-all 100000 lista))))
+
+
+(resultadosFinales (generaMuchasMaquinas money1 0 10))
+
+(defn resultadosNoparalelos [lista]
+  (apply concat (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x) (nth x 3))) lista)))
