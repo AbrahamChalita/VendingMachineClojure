@@ -251,12 +251,11 @@
 
 
 
-(defn processMachine [slots money transacciones originalMoney id]
+(defn processMachine [slots money transacciones originalMoney]
   (let [res (checks_all_transactions slots money transacciones originalMoney)
         new-money (get-updated-money (get-last-valid-transaction (reverse res)))
         new-slot (first (rest (get-last-valid-transaction (reverse res))))]
-    (list id
-          "<---------- Transactions ---------->"
+    (list "<---------- Transactions ---------->"
           (filter-results res)
           "<<<<<<<<<<<<< Review >>>>>>>>>>>>>>"
           (review new-money money new-slot originalMoney))))
@@ -266,11 +265,14 @@
 (defn generaLetra []
   (symbol (apply str (repeatedly 1 #(rand-nth letras)))))
 
+(defn randomAlfabeto []
+  (symbol (apply str (repeatedly 1 #(rand-nth "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))))
+
 (defn generaMoneda []
-  (rand-nth [1 2 5 10 20]))
+  (rand-nth [1 2 5 10 20 50]))
 
 (defn generaSecuencia [n]
-  (apply list (to-array (repeatedly n generaMoneda))))
+  (conj (repeatedly n generaMoneda) (rand-int 5)))
 
 (defn generaTransaccion []
   (let [numMonedas (rand-nth (range 1 6))]
@@ -278,31 +280,24 @@
 
 (defn generaListaTrans []
   (let [numTrans (rand-nth (range 1 30))]
-    (apply list (to-array (repeatedly numTrans generaTransaccion)))))
+    (conj (repeatedly numTrans generaTransaccion) (list (randomAlfabeto) (generaSecuencia numTrans)))))
 
 (defn generaProductos [lista]
   (let [prod (first lista)]
     (if (empty? lista) '()
-        (cons (list (symbol prod) (rand-nth (range 1 40)) (rand-nth (range 1 40))) (generaProductos (rest lista))))))
-
-; Generate a random list of available products
-(take 5 (repeatedly #(generaProductos letras)))
-; Generate a random list of transactions
-(take 5 (repeatedly #(generaListaTrans)))
+        (cons (list (symbol prod) (rand-nth (range 1 41)) (rand-nth (range 1 41))) 
+              (generaProductos (rest lista))))))
 
 ; money stays the same?
 
-(defn generaMuchasMaquinas [money id num]
-  (if (= num 0) '()
-      (cons (list (generaProductos letras) money (generaListaTrans) id num) (generaMuchasMaquinas money (+ id 1) (- num 1)))))
+(defn generaMaquina [money]
+  (list (generaProductos letras) money (generaListaTrans)))
 
 
-(defn resultadosFinales [lista]
-  (apply concat (pmap (fn [y] (doall (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x) (nth x 3))) y)))
-                      (partition-all 100000 lista))))
+(defn resultadosParalelos [lista]
+  (pmap (fn [y] (doall (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x))) y))) (partition-all 10 lista)))
 
-
-(resultadosFinales (generaMuchasMaquinas money1 0 10))
 
 (defn resultadosNoparalelos [lista]
-  (apply concat (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x) (nth x 3))) lista)))
+  (apply concat (map (fn [x] (processMachine (first x) (second x) (nth x 2) (second x))) lista)))
+
