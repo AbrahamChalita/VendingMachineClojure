@@ -1,0 +1,250 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"0.9.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.27.4"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +uberjar repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉situacion-problema.core꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉situacion-problema.core꞉> 
+(processMachine slots1 money1 transacciones1 money1 machineid1)
+("<---------- Transactions ---------->"
+ (("Transaction Successful!" ("Change: " ((1 1)) "Updated money: " ((1 9) (2 20) (5 23) (10 20) (20 30) (50 15))))
+  ("Transaction Successful!" ("No change needed!"))
+  ("Transaction Successful!" ("Change: " ((5 1)) "Updated money: " ((1 9) (2 20) (5 23) (10 20) (20 31) (50 15))))
+  (("Not enough money introduced"))
+  ("Transaction Successful!" ("No change needed!")))
+ "<<<<<<<<<<<<< Review >>>>>>>>>>>>>>"
+ ("<------- Earnings ------->"
+  7
+  "<------- Inventory ------->"
+  "No maintenance in inventory needed"
+  "<------- Full Coins ------->"
+  "No full/almost full coins"
+  "<------- Empty Coins ------->"
+  (("Coin: " 1 "Inv: " 9)))
+ "machine1")
+clj꞉situacion-problema.core꞉> 
+(def test1 (take 2 (repeatedly #(generaMaquina money1))))
+#'situacion-problema.core/test1
+clj꞉situacion-problema.core꞉> 
+(def res1 (resultadosParalelos test1 1))
+#'situacion-problema.core/res1
+clj꞉situacion-problema.core꞉> 
+test1
+((((A 27 22)
+   (B 30 14)
+   (C 15 4)
+   (D 8 22)
+   (E 32 9)
+   (F 22 13)
+   (G 14 29)
+   (H 36 29)
+   (I 17 28)
+   (J 20 27)
+   (K 8 22)
+   (L 18 17)
+   (M 14 34)
+   (N 4 35))
+  ((1 10 400) (2 20 300) (5 20 200) (10 20 200) (20 30 100) (50 15 100))
+  ((J (20 20 10 5 1))
+   (D (10 2 20 2))
+   (N (1 10 1))
+   (L (5 5 1 10))
+   (C (10 5 5 2))
+   (J (1 20))
+   (B (50 50 20 5 50))
+   (G (5 1 1 5))
+   (G (2))
+   (F (5))
+   (E (20))
+   (F (1 10 10 20 10))
+   (K (5 20 2 1))
+   (E (5 50))
+   (K (20 50 1 2 10))
+   (L (5 5 5 1 20))
+   (L (10 50 50 1 20))
+   (B (1 5 5 10)))
+  "ULvLctZWRGMckUT")
+ (((A 33 25)
+   (B 36 16)
+   (C 18 4)
+   (D 25 1)
+   (E 6 11)
+   (F 3 14)
+   (G 26 12)
+   (H 38 8)
+   (I 1 17)
+   (J 24 23)
+   (K 5 24)
+   (L 29 5)
+   (M 1 23)
+   (N 18 30))
+  ((1 10 400) (2 20 300) (5 20 200) (10 20 200) (20 30 100) (50 15 100))
+  ((J (50 5 1 5))
+   (L (10 10 50))
+   (N (5 2 1))
+   (G (1 1 5 2 1))
+   (N (10 50))
+   (A (20 5 5 1))
+   (I (5 10 5))
+   (D (10 5 1 5 5))
+   (J (5 10 20))
+   (N (5 20))
+   (D (20 50 50 2 50))
+   (G (5 10))
+   (L (1 50 10 1 1))
+   (B (5 10 2 2 20))
+   (M (50 50 50 20))
+   (K (2))
+   (L (10 1 2 2 2))
+   (H (1 50 5))
+   (B (5 20 20))
+   (J (5 20)))
+  "uikrlwTdNApZxT9"))
+clj꞉situacion-problema.core꞉> 
+res1
+((("<---------- Transactions ---------->"
+   (("Transaction Successful!"
+     ("Change: " ((20 1) (10 1) (5 1) (1 1)) "Updated money: " ((1 10) (2 20) (5 22) (10 22) (20 33) (50 15))))
+    ("Transaction Successful!"
+     ("Change: " ((20 1) (5 1) (1 1)) "Updated money: " ((1 9) (2 22) (5 23) (10 23) (20 35) (50 15))))
+    ("Transaction Successful!"
+     ("Change: " ((5 1) (2 1) (1 1)) "Updated money: " ((1 10) (2 23) (5 24) (10 24) (20 35) (50 15))))
+    ("Transaction Successful!"
+     ("Change: " ((2 1) (1 1)) "Updated money: " ((1 10) (2 24) (5 26) (10 25) (20 35) (50 15))))
+    ("Transaction Successful!"
+     ("Change: " ((5 1) (2 1)) "Updated money: " ((1 10) (2 24) (5 29) (10 26) (20 35) (50 15))))
+    ("Transaction Successful!" ("Change: " ((1 1)) "Updated money: " ((1 10) (2 24) (5 29) (10 26) (20 36) (50 15))))
+    ("Transaction Successful!"
+     ("Change: " ((50 2) (20 2) (5 1)) "Updated money: " ((1 10) (2 24) (5 29) (10 26) (20 39) (50 20))))
+    (("Not enough money introduced"))
+    (("Not enough money introduced"))
+    (("Not enough money introduced"))
+    (("Not enough money introduced"))
+    ("Transaction Successful!"
+     ("Change: " ((20 1) (5 1) (2 2)) "Updated money: " ((1 11) (2 22) (5 30) (10 29) (20 41) (50 20))))
+    ("Transaction Successful!" ("Change: " ((20 1)) "Updated money: " ((1 12) (2 23) (5 31) (10 29) (20 41) (50 20))))
+    ("Transaction Successful!"
+     ("Change: " ((20 1) (2 1) (1 1)) "Updated money: " ((1 11) (2 24) (5 32) (10 29) (20 42) (50 21))))
+    ("Transaction Successful!"
+     ("Change: " ((50 1) (20 1) (5 1)) "Updated money: " ((1 12) (2 25) (5 31) (10 30) (20 44) (50 23))))
+    ("Transaction Successful!"
+     ("Change: " ((10 1) (5 1) (2 1) (1 1)) "Updated money: " ((1 12) (2 26) (5 35) (10 31) (20 45) (50 23))))
+    ("Transaction Successful!"
+     ("Change: " ((50 2) (10 1) (2 1) (1 1)) "Updated money: " ((1 12) (2 27) (5 35) (10 33) (20 46) (50 27))))
+    (("Not enough money introduced")))
+   "<<<<<<<<<<<<< Review >>>>>>>>>>>>>>"
+   ("<------- Earnings ------->"
+    65
+    "<------- Inventory ------->"
+    (("Product: " C "Q: " 3))
+    "<------- Full Coins ------->"
+    "No full/almost full coins"
+    "<------- Empty Coins ------->"
+    "No empty/almost empty coins")
+   "ULvLctZWRGMckUT"))
+ (("<---------- Transactions ---------->"
+   (("Transaction Successful!"
+     ("Change: " ((20 1) (10 1) (5 1) (2 1)) "Updated money: " ((1 11) (2 19) (5 23) (10 21) (20 31) (50 16))))
+    ("Transaction Successful!"
+     ("Change: " ((20 2) (1 1)) "Updated money: " ((1 10) (2 19) (5 23) (10 23) (20 33) (50 17))))
+    (("Not enough money introduced"))
+    (("Not enough money introduced"))
+    ("Transaction Successful!"
+     ("Change: " ((20 2) (2 1)) "Updated money: " ((1 10) (2 18) (5 23) (10 24) (20 35) (50 18))))
+    (("Not enough money introduced"))
+    ("Transaction Successful!"
+     ("Change: " ((10 1) (5 1) (2 2)) "Updated money: " ((1 10) (2 16) (5 26) (10 26) (20 35) (50 18))))
+    ("Transaction Successful!" ("Change: " ((1 1)) "Updated money: " ((1 10) (2 16) (5 29) (10 27) (20 35) (50 18))))
+    ("Transaction Successful!"
+     ("Change: " ((10 1) (1 1)) "Updated money: " ((1 9) (2 16) (5 30) (10 29) (20 36) (50 18))))
+    ("Transaction Successful!"
+     ("Change: " ((5 1) (2 1)) "Updated money: " ((1 9) (2 15) (5 32) (10 29) (20 37) (50 18))))
+    (("No inventory"))
+    (("Not enough money introduced"))
+    ("Transaction Successful!"
+     ("Change: " ((20 1) (10 1) (2 2)) "Updated money: " ((1 12) (2 13) (5 32) (10 31) (20 38) (50 19))))
+    ("Transaction Successful!"
+     ("Change: " ((2 1) (1 1)) "Updated money: " ((1 11) (2 16) (5 33) (10 32) (20 39) (50 19))))
+    ("Transaction Successful!"
+     ("Change: " ((50 3) (10 1) (5 1) (2 2)) "Updated money: " ((1 11) (2 14) (5 34) (10 33) (20 40) (50 25))))
+    (("Not enough money introduced"))
+    (("Not enough money introduced"))
+    ("Transaction Successful!"
+     ("Change: " ((10 1) (5 1) (2 1) (1 1)) "Updated money: " ((1 11) (2 15) (5 36) (10 34) (20 40) (50 26))))
+    ("Transaction Successful!"
+     ("Change: " ((5 1) (2 2)) "Updated money: " ((1 11) (2 13) (5 38) (10 34) (20 42) (50 26))))
+    ("Transaction Successful!" ("Change: " ((1 1)) "Updated money: " ((1 10) (2 13) (5 39) (10 34) (20 43) (50 26)))))
+   "<<<<<<<<<<<<< Review >>>>>>>>>>>>>>"
+   ("<------- Earnings ------->"
+    57
+    "<------- Inventory ------->"
+    (("Product: " C "Q: " 4) ("Product: " D "Q: " 0) ("Product: " L "Q: " 3))
+    "<------- Full Coins ------->"
+    "No full/almost full coins"
+    "<------- Empty Coins ------->"
+    (("Coin: " 1 "Inv: " 10)))
+   "uikrlwTdNApZxT9")))
+clj꞉situacion-problema.core꞉> 
+(display-results (getNormalList res1))
+("<---------- Overall wins ---------->"
+ 122
+ "<---------- Top 10% winnings ---------->"
+ (("ID: " "ULvLctZWRGMckUT" "Winnings: " 65))
+ "<---------- Machines that need inventory refil ---------->"
+ (("ID: " "ULvLctZWRGMckUT" "Maintenance in: " (("Product: " C "Q: " 3)))
+  ("ID: "
+   "uikrlwTdNApZxT9"
+   "Maintenance in: "
+   (("Product: " C "Q: " 4) ("Product: " D "Q: " 0) ("Product: " L "Q: " 3))))
+ "<---------- Machines that need coin refill ---------->"
+ (("ID: " "uikrlwTdNApZxT9" "Maintenance in: " (("Coin: " 1 "Inv: " 10))))
+ "<---------- Machines that have reached coin limit ---------->"
+ "No one needs coins taken out")
+clj꞉situacion-problema.core꞉> 
+(def res3 (generaPruebas "P" 100 10))
+#'situacion-problema.core/res3
+clj꞉situacion-problema.core꞉> 
+(display-results (getNormalList res3))
+("<---------- Overall wins ---------->"
+ 585
+ "<---------- Top 10% winnings ---------->"
+ (("ID: " "IrgHrSaw1A3pq2R" "Winnings: " 96) ("ID: " "YxBxFIgYjsSSuD2" "Winnings: " 89))
+ "<---------- Machines that need inventory refil ---------->"
+ (("ID: " "Li0Bha87yJBfD84" "Maintenance in: " (("Product: " E "Q: " 3) ("Product: " G "Q: " 2)))
+  ("ID: " "IrgHrSaw1A3pq2R" "Maintenance in: " (("Product: " B "Q: " 0) ("Product: " F "Q: " 3)))
+  ("ID: " "8hHB8kz5YncDSi3" "Maintenance in: " (("Product: " G "Q: " 0) ("Product: " J "Q: " 5)))
+  ("ID: " "RNQ4yJwJsnzci6S" "Maintenance in: " (("Product: " H "Q: " 5)))
+  ("ID: "
+   "YxBxFIgYjsSSuD2"
+   "Maintenance in: "
+   (("Product: " H "Q: " 0) ("Product: " J "Q: " 1) ("Product: " M "Q: " 4)))
+  ("ID: " "iKFfAmk98iL1u2j" "Maintenance in: " (("Product: " G "Q: " 0)))
+  ("ID: " "09NKgilBordU0WM" "Maintenance in: " (("Product: " N "Q: " 5)))
+  ("ID: "
+   "EaWkhJjZ4pIeQH7"
+   "Maintenance in: "
+   (("Product: " E "Q: " 3) ("Product: " J "Q: " 0) ("Product: " M "Q: " 5)))
+  ("ID: "
+   "0MzX3VvtpBl33VC"
+   "Maintenance in: "
+   (("Product: " F "Q: " 3) ("Product: " I "Q: " 3) ("Product: " L "Q: " 0))))
+ "<---------- Machines that need coin refill ---------->"
+ (("ID: " "machine1" "Maintenance in: " (("Coin: " 1 "Inv: " 9)))
+  ("ID: " "Li0Bha87yJBfD84" "Maintenance in: " (("Coin: " 1 "Inv: " 8)))
+  ("ID: " "0MzX3VvtpBl33VC" "Maintenance in: " (("Coin: " 1 "Inv: " 10))))
+ "<---------- Machines that have reached coin limit ---------->"
+ "No one needs coins taken out")
+clj꞉situacion-problema.core꞉> 
